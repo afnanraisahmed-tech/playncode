@@ -1,0 +1,38 @@
+[
+  {
+    "id": "q1",
+    "prompt": "Write HTML that contains a paragraph with the text 'Hello'.",
+    "checks": [ { "type": "includes", "value": "<p", "message": "You need a <p> tag." } ],
+    "starter": { "html": "<p>Hello</p>", "css": "", "js": "" }
+  },
+  {
+    "id": "q2",
+    "prompt": "Add a button element to your HTML.",
+    "checks": [ { "type": "includes", "value": "<button", "message": "Missing <button> element." } ],
+    "starter": { "html": "<button>Click</button>", "css": "", "js": "" }
+  },
+  {
+    "id": "q3",
+    "prompt": "Style your page with a body background color.",
+    "checks": [ { "type": "includes", "value": "background", "message": "Add a background property." } ],
+    "starter": { "html": "<div>Content</div>", "css": "body { background: #eee; }", "js": "" }
+  },
+  {
+    "id": "q4",
+    "prompt": "Create a heading (h1) with the word 'Title'.",
+    "checks": [ { "type": "includes", "value": "<h1", "message": "Add an <h1> tag." } ],
+    "starter": { "html": "<h1>Title</h1>", "css": "", "js": "" }
+  },
+  {
+    "id": "q5",
+    "prompt": "Use JavaScript to log 'Hi' to the console.",
+    "checks": [ { "type": "includes", "value": "console.log", "message": "Use console.log()." } ],
+    "starter": { "html": "", "css": "", "js": "console.log('Hi');" }
+  },
+  {
+    "id": "q6",
+    "prompt": "Give any element a class named 'card'.",
+    "checks": [ { "type": "includes", "value": "class=", "message": "Add a class attribute." } ],
+    "starter": { "html": "<div class=\"card\">Hi</div>", "css": "", "js": "" }
+  }
+]
