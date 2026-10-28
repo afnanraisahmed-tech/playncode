@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="default">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeNPlay — Code, Learn, Play</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+
+  <!-- ============ WELCOME MODAL ============ -->
+  <div id="welcomeModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal royal-card" role="dialog" aria-labelledby="welcomeTitle">
+      <div class="modal-crown">👑</div>
+      <h1 id="welcomeTitle" class="modal-title">Welcome to <span class="gradient-text">CodeNPlay</span></h1>
+      <p class="modal-tagline">Code. Learn. Play. — Write code, watch your hero battle, master the web.</p>
+      <form id="welcomeForm" novalidate>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" placeholder="e.g. Sir Coder" autocomplete="off" />
+          <small class="error-msg" data-for="username"></small>
+        </div>
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input id="age" name="age" type="number" min="5" max="120" placeholder="e.g. 16" />
+          <small class="error-msg" data-for="age"></small>
+        </div>
+        <button type="submit" class="btn btn-gold btn-block">Enter the Kingdom</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ APP SHELL ============ -->
+  <div id="app" class="app-shell" hidden>
+
+    <!-- ====== TOP BAR ====== -->
+    <header class="topbar">
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+      <a href="#" class="brand" data-route="home">
+        <span class="brand-mark">C<span>P</span></span>
+        <span class="brand-name">CodeNPlay</span>
+      </a>
+
+      <div class="search-wrap">
+        <input id="searchInput" type="search" placeholder="Search lessons & levels..." aria-label="Search" />
+        <div id="searchResults" class="search-results" hidden></div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="theme-switch" role="group" aria-label="Theme">
+          <button data-theme-btn="default" title="System">🖥️</button>
+          <button data-theme-btn="dark" title="Dark">🌙</button>
+          <button data-theme-btn="light" title="Light">☀️</button>
+        </div>
+        <div class="user-chip">
+          <span class="user-avatar" id="userAvatar">?</span>
+          <span class="user-name" id="userName">Guest</span>
+          <span class="user-xp" id="userXP">0 XP</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ====== SIDEBAR ====== -->
+    <aside class="sidebar" id="sidebar">
+      <nav>
+        <a class="nav-item" data-route="home"><span class="nav-icon">🏠</span> Home</a>
+        <a class="nav-item" data-route="learn"><span class="nav-icon">📚</span> Learn</a>
+
+        <div class="nav-group">
+          <button class="nav-item nav-parent" id="levelsToggle">
+            <span class="nav-icon">🎯</span> Levels <span class="caret">▸</span>
+          </button>
+          <div class="nav-children" id="levelList">
+            <!-- Level links injected by JS from levels.json -->
+          </div>
+        </div>
+
+        <a class="nav-item" data-route="practice"><span class="nav-icon">♻️</span> Endless Practice</a>
+        <a class="nav-item" data-route="skill"><span class="nav-icon">🏆</span> Test Your Skill</a>
+        <a class="nav-item" data-route="reset" id="resetBtn"><span class="nav-icon">🔄</span> Reset</a>
+      </nav>
+      <div class="sidebar-footer">v1.0 • Made with 💜</div>
+    </aside>
+
+    <!-- ====== MAIN CONTENT ====== -->
+    <main class="main-content" id="mainContent">
+
+      <!-- HOME VIEW -->
+      <section class="view" id="view-home">
+        <div class="hero-banner royal-card">
+          <h2>Welcome back, <span class="gradient-text" id="heroUserName">Coder</span>!</h2>
+          <p>Write code, defeat enemies, learn the web. Pick a level or jump into endless practice.</p>
+          <div class="hero-actions">
+            <button class="btn btn-gold" data-route="levels/1">Start Level 1</button>
+            <button class="btn btn-ghost" data-route="practice">Endless Practice</button>
+          </div>
+        </div>
+
+        <!-- Game + Editor -->
+        <div class="workbench">
+          <div class="game-panel royal-card">
+            <div class="game-header">
+              <span class="game-title" id="gameTitle">Level 1 — HTML Basics</span>
+              <span class="game-hp">❤️ <span id="heroHP">100</span> / <span id="enemyHP">100</span> 🗡️</span>
+            </div>
+            <canvas id="gameCanvas" width="480" height="300"></canvas>
+            <div class="game-status" id="gameStatus">Press Run to begin the battle.</div>
+          </div>
+
+          <div class="editor-panel royal-card">
+            <div class="editor-tabs">
+              <button class="tab active" data-lang="html">HTML</button>
+              <button class="tab" data-lang="css">CSS</button>
+              <button class="tab" data-lang="js">JS</button>
+              <div class="editor-actions">
+                <button class="btn btn-gold btn-sm" id="runBtn">▶ Run</button>
+                <button class="btn btn-ghost btn-sm" id="resetCodeBtn">↺ Reset</button>
+              </div>
+            </div>
+            <div class="editor-body">
+              <div class="line-numbers" id="lineNumbers">1</div>
+              <div class="editor-code-wrap">
+                <pre class="highlight-layer" id="highlightLayer"><code></code></pre>
+                <textarea id="codeInput" class="code-input" spellcheck="false" autocomplete="off"></textarea>
+              </div>
+            </div>
+            <div class="error-bar" id="errorBar" hidden></div>
+          </div>
+        </div>
+
+        <!-- Output -->
+        <div class="output-panel royal-card">
+          <div class="output-header">
+            <span>🖥️ Output</span>
+            <span class="output-hint">Scroll down to see your result</span>
+          </div>
+          <iframe id="outputFrame" sandbox="allow-scripts" title="Output"></iframe>
+        </div>
+      </section>
+
+      <!-- LEARN VIEW -->
+      <section class="view" id="view-learn" hidden>
+        <h2 class="view-title">📚 Learn HTML, CSS & JavaScript</h2>
+        <p class="view-sub">Simple lessons with examples. Click "Try it" to load code into the editor.</p>
+        <div id="learnGrid" class="learn-grid"></div>
+      </section>
+
+      <!-- PRACTICE VIEW -->
+      <section class="view" id="view-practice" hidden>
+        <h2 class="view-title">♻️ Endless Practice</h2>
+        <p class="view-sub">Solve random challenges. One mistake restarts from the beginning with shuffled order.</p>
+        <div class="practice-panel royal-card">
+          <div class="practice-header">
+            <span>Question <span id="practiceIndex">1</span> / <span id="practiceTotal">0</span></span>
+            <span>Score: <span id="practiceScore">0</span></span>
+          </div>
+          <div class="practice-question" id="practiceQuestion">Loading...</div>
+          <div class="practice-actions">
+            <button class="btn btn-gold" id="practiceRun">▶ Run & Check</button>
+            <button class="btn btn-ghost" id="practiceSkip">Skip</button>
+          </div>
+          <div class="practice-feedback" id="practiceFeedback"></div>
+        </div>
+      </section>
+
+      <!-- SKILL VIEW -->
+      <section class="view" id="view-skill" hidden>
+        <h2 class="view-title">🏆 Test Your Skill</h2>
+        <p class="view-sub">Write any code you know. We'll analyze it and give you a skill score.</p>
+        <div class="skill-panel royal-card">
+          <div class="skill-grid">
+            <div class="skill-card"><div class="skill-label">HTML</div><div class="skill-score" id="skillHtml">0</div><div class="skill-bar"><div id="skillHtmlBar"></div></div></div>
+            <div class="skill-card"><div class="skill-label">CSS</div><div class="skill-score" id="skillCss">0</div><div class="skill-bar"><div id="skillCssBar"></div></div></div>
+            <div class="skill-card"><div class="skill-label">JavaScript</div><div class="skill-score" id="skillJs">0</div><div class="skill-bar"><div id="skillJsBar"></div></div></div>
+          </div>
+          <div class="skill-overall" id="skillOverall">Overall: —</div>
+          <div class="skill-feedback" id="skillFeedback"></div>
+          <button class="btn btn-gold" id="skillAnalyze">Analyze My Code</button>
+        </div>
+      </section>
+
+      <!-- LEVEL VIEW (dynamic) -->
+      <section class="view" id="view-level" hidden>
+        <h2 class="view-title" id="levelTitle">Level</h2>
+        <p class="view-sub" id="levelSub"></p>
+        <div class="level-panel royal-card">
+          <div class="level-meta">
+            <span id="levelRequirements"></span>
+            <span id="levelHint" class="hint"></span>
+          </div>
+          <div class="level-reward" id="levelReward"></div>
+        </div>
+        <!-- workbench + output reuse same DOM ids? No—we clone into home only.
+             For simplicity, levels use the HOME workbench (routing scrolls to it). -->
+      </section>
+    </main>
+
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" hidden></div>
+  </div>
+
+  <!-- Scripts (order matters) -->
+  <script src="js/storage.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/practice.js"></script>
+  <script src="js/skill.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
